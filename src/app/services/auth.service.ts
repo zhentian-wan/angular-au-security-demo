@@ -4,6 +4,8 @@ import {Observable} from 'rxjs/Observable';
 import {User} from '../model/user';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/shareReplay';
+import 'rxjs/add/operator/do';
 
 export const ANONYMOUS_USER: User = {
   id: undefined,
@@ -22,7 +24,11 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   signUp(email: string, password: string) {
-
+    return this.http.post<User>('/api/signup', {
+      email,
+      password
+    }).shareReplay()
+      .do((user) => this.subject.next(user));
   }
 
 }
