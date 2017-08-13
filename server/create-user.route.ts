@@ -11,7 +11,7 @@ export function createUser (req: Request, res: Response) {
   argon.hash(credentials.password)
     .then(passwordDigest => {
 
-      const user = db.createUser(credentials.email, credentials.password);
+      const user = db.createUser(credentials.email, passwordDigest);
 
       console.log(USERS);
       res.status(200).json({id: user.id, email: user.email});
