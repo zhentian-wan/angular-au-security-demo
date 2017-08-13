@@ -12,12 +12,12 @@ class InMemoryDatabase {
         return _.values(LESSONS);
     }
 
-    createUser(email, password) {
+    createUser(email, passwordDigest) {
       const id = ++this.userCounter;
       const user: DbUser = {
         id,
         email,
-        password
+        passwordDigest
       };
 
       USERS[id] = user;
