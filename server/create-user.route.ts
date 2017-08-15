@@ -9,7 +9,7 @@ export function createUser (req: Request, res: Response) {
 
   const credentials = req.body;
 
-  const errors = validatePassword(credentials);
+  const errors = validatePassword(credentials.password);
 
   if (errors.length > 0) {
     res.status(400).json({
