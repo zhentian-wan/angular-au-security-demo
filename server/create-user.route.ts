@@ -8,7 +8,6 @@ import {randomBytes} from './security.utils';
 import {sessionStore} from './session-store';
 
 export function createUser (req: Request, res: Response) {
-
   const credentials = req.body;
 
   const errors = validatePassword(credentials.password);
@@ -23,14 +22,19 @@ export function createUser (req: Request, res: Response) {
 }
 
 async function createUserAndSession(res, credentials) {
+  // Create a password digest
   const passwordDigest = await argon2.hash(credentials.password);
+  // Save into db
   const user = db.createUser(credentials.email, passwordDigest);
+  // create random session id
   const sessionId = await randomBytes(32).then(bytes => bytes.toString('hex'));
-  console.log(sessionId);
+  // link sessionId with user
   sessionStore.createSession(sessionId, user);
+  // set sessionid into cookie
   res.cookie('SESSIONID', sessionId, {
-    httpOnly: true, // enable http only, so that JS cannot access cookie
-    secure: true // enable https
+    httpOnly: true, // js cannot access cookie
+    secure: true // enable https only
   });
+  // send back to UI
   res.status(200).json({id: user.id, email: user.email});
 }
