@@ -8,7 +8,7 @@ export class Session {
   private validUntil: Moment;
 
   constructor(
-    public sessionId: number,
+    public sessionId: string,
     public user: User
   ) {
 
