@@ -28,6 +28,8 @@ async function createUserAndSession(res, credentials) {
   const sessionId = await randomBytes(32).then(bytes => bytes.toString('hex'));
   console.log(sessionId);
   sessionStore.createSession(sessionId, user);
-  res.cookie('SESSIONID', sessionId);
+  res.cookie('SESSIONID', sessionId, {
+    httpOnly: true, // enable http only, so that JS cannot access cookie
+  });
   res.status(200).json({id: user.id, email: user.email});
 }
