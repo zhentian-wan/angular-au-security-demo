@@ -30,6 +30,7 @@ async function createUserAndSession(res, credentials) {
   sessionStore.createSession(sessionId, user);
   res.cookie('SESSIONID', sessionId, {
     httpOnly: true, // enable http only, so that JS cannot access cookie
+    secure: true // enable https
   });
   res.status(200).json({id: user.id, email: user.email});
 }
