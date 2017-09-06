@@ -6,10 +6,9 @@ import {readAllLessons} from './read-all-lessons.route';
 import {createUser} from './create-user.route';
 import {getUser} from './get-user.route';
 import {isSessionValid} from './valid-session.middle';
+import {logout} from './logout.route';
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-
-const router: Router = express.Router();
 
 const app: Application = express();
 
@@ -39,6 +38,9 @@ app.route('/api/signup')
 
 app.route('/api/user')
   .get(getUser);
+
+app.route('/api/logout')
+  .post(logout);
 
 
 if (options.secure) {

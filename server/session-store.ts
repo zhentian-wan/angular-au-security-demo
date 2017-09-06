@@ -16,6 +16,10 @@ class SessionStore {
     const session = this.sessions[sessionId];
     return session && session.isValid();
   }
+
+  destroySession(sessionId: string): void {
+    delete this.sessions[sessionId];
+  }
 }
 
 // We want only global singleton
