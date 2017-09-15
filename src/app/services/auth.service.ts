@@ -42,4 +42,12 @@ export class AuthService {
       .shareReplay()
       .do(() => this.subject.next(ANONYMOUS_USER));
   }
+
+  login(email: string, password: string) {
+    return this.http.post<User>('api/login', {
+      email,
+      password
+    }).shareReplay()
+      .do(user => this.subject.next(user));
+  }
 }

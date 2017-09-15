@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {AuthService} from './services/auth.service';
 import {Observable} from 'rxjs/Observable';
 import {User} from './model/user';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +15,7 @@ export class AppComponent implements OnInit {
   isLoggedIn$: Observable<boolean>;
   isLoggedOut$: Observable<boolean>;
 
-  constructor(private auth: AuthService) {
+  constructor(private auth: AuthService, private router: Router) {
 
   }
 
@@ -29,5 +30,19 @@ export class AppComponent implements OnInit {
   }
 
 
+  login() {
+    const val = this.form.value;
 
+    if (val.email && val.password) {
+      this.auth.login(
+        val.email,
+        val.password
+      ).subscribe(
+        () => {
+          console.log('User logged in');
+          this.router.navigateByUrl('/');
+        }
+      );
+    }
+  }
 }
