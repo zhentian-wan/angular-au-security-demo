@@ -1,7 +1,6 @@
 var jwt = require('jsonwebtoken');
 
 
-
 var secretKey = 'secret-key';
 
 var payload = {
@@ -14,4 +13,4 @@ var newToken = jwt.sign(payload, secretKey, {
   algorithm: 'HS256'
 });
 
-console.log("JWT created:", newToken);
+console.log('JWT created:', newToken);
