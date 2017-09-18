@@ -14,7 +14,6 @@
             <a routerLink="/signup">Sign Up</a>
         </li>
         <li
-          (click)="login()"
           *ngIf="isLoggedOut$ | async">
             <a routerLink="/login">Login</a>
         </li>

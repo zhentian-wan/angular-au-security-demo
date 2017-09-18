@@ -28,21 +28,4 @@ export class AppComponent implements OnInit {
   logout() {
     this.auth.logout().subscribe();
   }
-
-
-  login() {
-    const val = this.form.value;
-
-    if (val.email && val.password) {
-      this.auth.login(
-        val.email,
-        val.password
-      ).subscribe(
-        () => {
-          console.log('User logged in');
-          this.router.navigateByUrl('/');
-        }
-      );
-    }
-  }
 }
