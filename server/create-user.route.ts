@@ -3,8 +3,7 @@ import {db} from './database';
 
 import * as argon2 from 'argon2';
 import {validatePassword} from './password-validation';
-import {randomBytes} from './security.utils';
-import {sessionStore} from './session-store';
+import {createSessionToken} from './security.utils';
 
 export function createUser (req: Request, res: Response) {
   const credentials = req.body;
@@ -25,10 +24,8 @@ async function createUserAndSession(res, credentials) {
   const passwordDigest = await argon2.hash(credentials.password);
   // Save into db
   const user = db.createUser(credentials.email, passwordDigest);
-  // create random session id
-  const sessionId = await randomBytes(32).then(bytes => bytes.toString('hex'));
-  // link sessionId with user
-  sessionStore.createSession(sessionId, user);
+  // Create user JWT token
+  const sessionId = await createSessionToken(user.id.toString());
   // set sessionid into cookie
   res.cookie('SESSIONID', sessionId, {
     httpOnly: true, // js cannot access cookie

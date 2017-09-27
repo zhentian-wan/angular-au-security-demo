@@ -5,7 +5,6 @@ import * as https from 'https';
 import {readAllLessons} from './read-all-lessons.route';
 import {createUser} from './create-user.route';
 import {getUser} from './get-user.route';
-import {isSessionValid} from './valid-session.middle';
 import {logout} from './logout.route';
 import {login} from './login.route';
 const bodyParser = require('body-parser');
@@ -27,7 +26,7 @@ app.use(bodyParser.json());
 
 
 // middlewares
-app.use('/api/lessons', isSessionValid);
+// app.use('/api/lessons');
 
 // REST API
 app.route('/api/lessons')
